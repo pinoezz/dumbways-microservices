@@ -14,10 +14,11 @@ spec:
     spec:
       containers:
       - name: todo-profile
-        image: suganda/todo-profile
+        image: pinoezz/todo-profile
         ports:
-        - containerPort: 80
-
+        - containerPort: 5001
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo hello; sleep 10;done"]
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -35,15 +36,16 @@ spec:
     spec:
       containers:
       - name: todo-services
-        image: suganda/todo-services
+        image: pinoezz/todo-services
         ports:
-        - containerPort: 80
-        
+        - containerPort: 4000
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo hello; sleep 10;done"]
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo-skill
+name: todo-skill
 spec:
   selector:
     matchLabels:
@@ -56,9 +58,11 @@ spec:
     spec:
       containers:
       - name: todo-skill
-        image: suganda/todo-skill
+        image: pinoezz/todo-skill
         ports:
-        - containerPort: 80
+        - containerPort: 5000
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo hello; sleep 10;done"]
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -71,14 +75,16 @@ spec:
   replicas: 1 # tells deployment to run 2 pods matching the template
   template:
     metadata:
-      labels:
+labels:
         app: todo-todo
     spec:
       containers:
       - name: todo-todo
-        image: suganda/todo-todo
+        image: pinoezz/todo-todo
         ports:
-        - containerPort: 80
+        - containerPort: 5002
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo hello; sleep 10;done"]
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -96,26 +102,28 @@ spec:
     spec:
       containers:
       - name: todo-user
-        image: suganda/todo-user
+        image: pinoezz/todo-user
         ports:
-        - containerPort: 80
+        - containerPort: 7000
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo hello; sleep 10;done"]
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo-profile
+  name: mongo
 spec:
   selector:
     matchLabels:
-      app: todo-profile
+      app: mongo
   replicas: 1 # tells deployment to run 2 pods matching the template
-  template:
+template:
     metadata:
       labels:
-        app: todo-profile
+        app: mongo
     spec:
       containers:
-      - name: todo-profile
-        image: mongodb
+      - name: mongo
+        image: mongo
         ports:
         - containerPort: 27017
