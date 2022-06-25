@@ -8,7 +8,7 @@ services:
         - PUID=1000
         - PGID=1000
         volumes:
-        - /home/pinoezz/mongo/database:/data/db
+        - /home/manager/mongo/database:/data/db
         ports:
         - 27017:27017
         restart: unless-stopped
